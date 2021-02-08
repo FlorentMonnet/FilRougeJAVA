@@ -94,15 +94,11 @@ public class ModelImplementor {
 		 
 		PieceModel findPiece = null;
 
-		for(PieceModel pieceModel : this.pieces)
+		for(PieceModel pawn : this.pieces)
 		{
-			if(pieceModel instanceof PawnModel)
+			if(pawn.hasThisCoord(coord))
 			{
-				PawnModel pawn = (PawnModel) pieceModel;
-				if(pawn.getColonne() == coord.getColonne() && pawn.getLigne() == coord.getLigne())
-				{
-					findPiece =  pieceModel;
-				}
+				findPiece =  pawn;
 			}
 		}
 		
