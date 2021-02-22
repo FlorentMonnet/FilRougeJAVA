@@ -14,6 +14,7 @@ import nutsAndBolts.PieceSquareColor;
 
 public class PieceGui extends ImageView implements CheckersPieceGui {
 	
+	private PieceSquareColor color;
 	@Override
 	public void promote(Image image) {
 		
@@ -21,17 +22,24 @@ public class PieceGui extends ImageView implements CheckersPieceGui {
 		
 	}
 
-	public PieceGui(Image image) {
+	public PieceGui(Image image, PieceSquareColor color) {
 		super();
 		super.setImage(image);
+		this.color = color;
 	}
 	
+	public PieceSquareColor getColor() {
+		return color;
+	}
+
+	public void setColor(PieceSquareColor color) {
+		this.color = color;
+	}
+
 	@Override
 	public boolean hasSameColorAsGamer(PieceSquareColor gamerColor) {
 
-		// ToDo Atelier 2, utile pour Atelier 4
-		
-		return false; // � changer 
+		return this.color == gamerColor;
 	}
 	
 }

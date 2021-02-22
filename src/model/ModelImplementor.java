@@ -20,7 +20,7 @@ import nutsAndBolts.PieceSquareColor;
 public class ModelImplementor {
 
 	// la collection de pi�ces en jeu - m�lange noires et blanches
-	private Collection<PieceModel> pieces ;	
+	private Collection<PieceModel> pieces;	
 
 	public ModelImplementor() {
 		super();
@@ -30,7 +30,8 @@ public class ModelImplementor {
 
 	public PieceSquareColor getPieceColor(Coord coord) {
 		PieceSquareColor color = null;
-		if(isPiecehere(coord))
+		PieceModel pieceTofind = findPiece(coord);
+		if(pieceTofind != null)
 		{
 			color = findPiece(coord).getPieceColor();
 		}
@@ -39,49 +40,52 @@ public class ModelImplementor {
 
 	public boolean isPiecehere(Coord coord) {
 		boolean isPiecehere = false;
-
 		if(findPiece(coord)!=null)
 		{
 			isPiecehere = true;
-		}		
+		}
 		return isPiecehere;
 	}
 
 	public boolean isMovePieceOk(Coord initCoord, Coord targetCoord, boolean isPieceToTake) {
-
-		boolean isMovePieceOk = false;
-
-		if(isPiecehere(initCoord))
-		{
-			isMovePieceOk = findPiece(initCoord).isMoveOk(targetCoord, isPieceToTake);
-		}
-		return isMovePieceOk;
+	    boolean isMovePieceOk = false;
+        // TODO Atelier 1
+        PieceModel pieceModel = findPiece(initCoord);
+        if(pieceModel != null) {
+        	isMovePieceOk = pieceModel.isMoveOk(targetCoord, isPieceToTake);
+        }
+        return isMovePieceOk;
 	}
 
 
 	public boolean movePiece(Coord initCoord, Coord targetCoord) {
 
 		boolean isMovePieceDone = false;
-		if(isPiecehere(initCoord))
+		PieceModel pieceTofind = findPiece(initCoord);
+		if(pieceTofind != null)
 		{
-			findPiece(initCoord).move(targetCoord);
-			isMovePieceDone=true;
+			pieceTofind.move(targetCoord);
+			isMovePieceDone = true;
 		}
+		
 		return isMovePieceDone;
 	}
 
 	public void removePiece(Coord pieceToTakeCoord) {
-
-		// TODO Atelier 2
-		
+		PieceModel pieceTofind = findPiece(pieceToTakeCoord);
+		if(pieceTofind != null)
+		{
+			this.pieces.remove(pieceTofind);
+		}
 	}
-
 	
 	public List<Coord> getCoordsOnItinerary(Coord initCoord, Coord targetCoord) {
 		List<Coord> coordsOnItinerary = null;
-		
-		// TODO Atelier 2
-		
+		PieceModel pieceTofind = findPiece(initCoord);
+		if(pieceTofind != null)
+		{
+			coordsOnItinerary = pieceTofind.getCoordsOnItinerary(targetCoord);
+		}
 		return coordsOnItinerary;
 	}
 
@@ -90,10 +94,10 @@ public class ModelImplementor {
 	 * @param coord
 	 * @return la pi�ce qui se trouve aux coordonn�es indiqu�es
 	 */
-	 private PieceModel findPiece(Coord coord) {
+	 public PieceModel findPiece(Coord coord) {
 		 
 		PieceModel findPiece = null;
-
+		
 		for(PieceModel pawn : this.pieces)
 		{
 			if(pawn.hasThisCoord(coord))

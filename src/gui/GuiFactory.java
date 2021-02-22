@@ -36,9 +36,9 @@ public class GuiFactory {
 	 * @return Une case noire ou blanche en alternance
 	 * la case en bas � gauche est noire
 	 */
-	public static BorderPane createSquare(int col, int ligne) {
+	public static SquareGui createSquare(int col, int ligne) {
 		
-		BorderPane square = null;
+		SquareGui square = null;
 		PieceSquareColor squareColor;
 
 		// s�lection de la couleur de la case
@@ -47,13 +47,12 @@ public class GuiFactory {
 		} else {
 			squareColor = PieceSquareColor.BLACK;
 		}
-		square = new BorderPane();
 		
-		// la couleur est d�finie par les valeurs par d�faut de configuration
 		Color color = PieceSquareColor.BLACK.equals(squareColor) ? GuiConfig.CASEBLACK : GuiConfig.CASEWHITE;
-		square.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
-		square.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+		Background background = new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY));
 		
+		square = new SquareGui(border,background);
 		return square;
 	}
 
@@ -77,7 +76,7 @@ public class GuiFactory {
 		}
 		if (pieceColor != null) {
 			image = GuiFactory.createImage(pieceColor, true);
-			pieceGui = new PieceGui(image);
+			pieceGui = new PieceGui(image,pieceColor);
 		}
 
 		return pieceGui;

@@ -22,9 +22,6 @@ import nutsAndBolts.PieceSquareColor;
  */
 class SquareGui extends BorderPane implements CheckersSquareGui {
 
-	// ToDo Atelier 2
-	private Border border;
-	private Background background;
 	/**
 	 *Retourne l'indice du carr� sur la grille (N� de 0 � 99)
 	 */
@@ -35,15 +32,16 @@ class SquareGui extends BorderPane implements CheckersSquareGui {
 		index = parent.getChildren().indexOf(this);
 		return index;
 	}
-
-	public SquareGui(Border border,Background background) {
+	
+	public SquareGui()
+	{
 		super();
-		super.setBackground(background);
-		super.setBorder(border);
-		this.border=border;
-		this.background=background;
 	}
 	
+	public SquareGui(Border border,Background background) {
+		super();
+		super.setBorder(border);
+		super.setBackground(background);
+	}
 	
-
 }
