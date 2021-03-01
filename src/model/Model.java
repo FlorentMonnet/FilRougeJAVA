@@ -75,8 +75,13 @@ public class Model implements BoardGame<Coord> {
 						// suppression effective de la pi�ce prise
 						this.remove(toCapturePieceCoord);
 					}
-					
-					if()
+					System.out.println(targetSquareCoord);
+					if(this.isPromotable(targetSquareCoord))
+					{
+						this.promotePiece(targetSquareCoord);
+						toPromotePieceCoord = targetSquareCoord;
+						toPromotePieceColor = this.currentGamerColor;
+					}
 					// S'il n'y a pas eu de prise
 					// ou si une rafle n'est pas possible alors changement de joueur
 					if (true) { // TODO : Test � changer atelier 4
@@ -103,7 +108,7 @@ public class Model implements BoardGame<Coord> {
 	 *         et que les coordonn�es d'arriv�es soient dans les limites du tableau
 	 *         et qu'il n'y ait pas de pi�ce sur la case d'arriv�e
 	 */
-	boolean isPieceMoveable(Coord toMovePieceCoord, Coord targetSquareCoord) { // TODO : remettre en "private" apr�s
+	private boolean isPieceMoveable(Coord toMovePieceCoord, Coord targetSquareCoord) { // TODO : remettre en "private" apr�s
 																				// test unitaires
 		boolean bool = false;
 
@@ -122,19 +127,19 @@ public class Model implements BoardGame<Coord> {
 	 *         la trajectoire ou pas de pi�ce � prendre
 	 */
 	private boolean isThereMaxOnePieceOnItinerary(Coord toMovePieceCoord, Coord targetSquareCoord) {
-		boolean isThereMaxOnePieceOnItinerary = true;
+		boolean isThereMaxOnePieceOnItinerary = false;
 		int numberOfPieces = 0;
 		List<Coord> coordsOnItinerary = this.implementor.getCoordsOnItinerary(toMovePieceCoord, targetSquareCoord);
+		Coord potentialToCapturePieceCoord = null;
 		for (Coord coord : coordsOnItinerary) {
 			if (this.implementor.isPiecehere(coord)) {
-				if (this.implementor.getPieceColor(coord) != this.implementor.getPieceColor(toMovePieceCoord)) {
-					isThereMaxOnePieceOnItinerary = true;
 					numberOfPieces++;
-				}
+					potentialToCapturePieceCoord = coord;
 			}
 		}
-		if (numberOfPieces > 1) {
-			isThereMaxOnePieceOnItinerary = false;
+		
+		if (numberOfPieces == 0 || (numberOfPieces == 1 && this.currentGamerColor != this.implementor.getPieceColor(potentialToCapturePieceCoord))){
+			isThereMaxOnePieceOnItinerary = true;
 		}
 		return isThereMaxOnePieceOnItinerary;
 	}
@@ -148,12 +153,14 @@ public class Model implements BoardGame<Coord> {
 		Coord toCapturePieceCoord = null;
 		List<Coord> coordsOnItinerary = this.implementor.getCoordsOnItinerary(toMovePieceCoord, targetSquareCoord);
 		for (Coord coord : coordsOnItinerary) {
+			System.out.println(coord);
 			if (this.implementor.isPiecehere(coord)) {
 				if (this.implementor.getPieceColor(coord) != this.implementor.getPieceColor(toMovePieceCoord)) {
 					toCapturePieceCoord = coord;
 				}
 			}
 		}
+		System.out.println(toCapturePieceCoord);
 		return toCapturePieceCoord;
 	}
 
@@ -171,6 +178,10 @@ public class Model implements BoardGame<Coord> {
 		return this.implementor.isMovePieceOk(toMovePieceCoord, targetSquareCoord, isPieceToCapture);
 	}
 
+	private boolean isPromotable(Coord toPromoteCoord)
+	{
+		return this.implementor.isPromotable(toPromoteCoord);
+	}
 	/**
 	 * @param toMovePieceCoord
 	 * @param targetSquareCoord D�placement effectif de la PieceModel
@@ -186,7 +197,11 @@ public class Model implements BoardGame<Coord> {
 	private void remove(Coord toCapturePieceCoord) {
 		this.implementor.removePiece(toCapturePieceCoord);
 	}
-
+	
+	private void promotePiece(Coord toPromoteCoord) {
+		this.implementor.promote(toPromoteCoord);
+	}
+	
 	private void switchGamer() { // TODO : remettre en "private" apr�s test unitaires
 		this.currentGamerColor = (PieceSquareColor.WHITE).equals(this.currentGamerColor) ? PieceSquareColor.BLACK
 				: PieceSquareColor.WHITE;

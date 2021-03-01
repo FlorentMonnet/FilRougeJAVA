@@ -39,7 +39,7 @@ public class PieceGui extends ImageView implements CheckersPieceGui {
 	@Override
 	public boolean hasSameColorAsGamer(PieceSquareColor gamerColor) {
 
-		return this.color == gamerColor;
+		return this.color.equals(gamerColor);
 	}
 	
 }

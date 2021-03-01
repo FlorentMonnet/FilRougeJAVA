@@ -11,12 +11,12 @@ public class ModelFactory {
 		
 		Collection<PieceModel> pieces = new LinkedList<PieceModel>();
 
-		// Création des pion blancs et ajout dans la collection de pièces
+		// Crï¿½ation des pion blancs et ajout dans la collection de piï¿½ces
 		for ( Coord coord : ModelConfig.WHITE_PIECE_COORDS){
 			pieces.add(new PawnModel(coord, PieceSquareColor.WHITE));
 		}
 
-		// Création des pions noirs et ajout dans la collection de pièces
+		// Crï¿½ation des pions noirs et ajout dans la collection de piï¿½ces
 		for ( Coord coord : ModelConfig.BLACK_PIECE_COORDS){
 			pieces.add(new PawnModel(coord, PieceSquareColor.BLACK));
 		}

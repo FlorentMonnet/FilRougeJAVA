@@ -79,6 +79,11 @@ public class ModelImplementor {
 		}
 	}
 	
+	public void createQueen(Coord toPromoteCoord, PieceSquareColor color) {
+		PieceModel pieceModel = new QueenModel(toPromoteCoord,color);
+		this.pieces.add(pieceModel);
+	}
+	
 	public List<Coord> getCoordsOnItinerary(Coord initCoord, Coord targetCoord) {
 		List<Coord> coordsOnItinerary = null;
 		PieceModel pieceTofind = findPiece(initCoord);
@@ -89,7 +94,25 @@ public class ModelImplementor {
 		return coordsOnItinerary;
 	}
 
+	public boolean isPromotable(Coord toPromoteCoord)
+	{
+		boolean isPromotable = false;
+		PieceModel pieceTofind = findPiece(toPromoteCoord);
+		
+		if(pieceTofind != null && pieceTofind instanceof Promotable)
+		{
+			Promotable pawnPromotable = (Promotable) pieceTofind;
+			isPromotable = pawnPromotable.isPromotable();
+		}
+		return isPromotable;
+	}
 	
+	public void promote(Coord toPromoteCoord)
+	{
+		PieceModel pieceTofind = findPiece(toPromoteCoord);
+		this.removePiece(toPromoteCoord);
+		this.createQueen(toPromoteCoord,pieceTofind.getPieceColor());
+	}
 	/**
 	 * @param coord
 	 * @return la pi�ce qui se trouve aux coordonn�es indiqu�es
@@ -98,11 +121,11 @@ public class ModelImplementor {
 		 
 		PieceModel findPiece = null;
 		
-		for(PieceModel pawn : this.pieces)
+		for(PieceModel piece : this.pieces)
 		{
-			if(pawn.hasThisCoord(coord))
+			if(piece.hasThisCoord(coord))
 			{
-				findPiece =  pawn;
+				findPiece =  piece;
 			}
 		}
 		

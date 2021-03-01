@@ -36,9 +36,9 @@ public class GuiFactory {
 	 * @return Une case noire ou blanche en alternance
 	 * la case en bas � gauche est noire
 	 */
-	public static SquareGui createSquare(int col, int ligne) {
+	public static BorderPane createSquare(int col, int ligne) {
 		
-		SquareGui square = null;
+		BorderPane square = null;
 		PieceSquareColor squareColor;
 
 		// s�lection de la couleur de la case
@@ -62,9 +62,9 @@ public class GuiFactory {
 	 * @return une PieceGui si col/ligne correspond � cases noires
 	 * des 4 lignes du haut (piece noire) et du bas du damier (piece blanche)
 	 */
-	public static PieceGui createPiece(int col, int ligne) {
+	public static ImageView createPiece(int col, int ligne) {
 
-		PieceGui pieceGui = null;
+		ImageView pieceGui = null;
 		Image image = null;
 		PieceSquareColor pieceColor = null;
 
@@ -89,7 +89,15 @@ public class GuiFactory {
 	 */
 	public static void PromotePiece(ImageView piece, PieceSquareColor promotedPieceColor) {
 
-		// ToDo Atelier 3
+		if(piece instanceof PieceGui)
+		{
+			Image image = GuiFactory.createImage(promotedPieceColor,false);
+			PieceGui pieceGui = (PieceGui) piece;
+			if(pieceGui.hasSameColorAsGamer(promotedPieceColor))
+			{
+				pieceGui.promote(image);
+			}
+		}
 		
 	}
 	

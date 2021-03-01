@@ -85,7 +85,7 @@ public class TestModel {
 
 		System.out.println("\nTest classe Model");
 		Model model = new Model();	// constructeur cr�e model et l'affiche
-		System.out.println("isPieceMoveable ('b',4) -> ('c',5)  = " 
+		/*System.out.println("isPieceMoveable ('b',4) -> ('c',5)  = " 
 							+ model.isPieceMoveable(new Coord('b',4), new Coord('c',5)));	// true
 		System.out.println("isPieceMoveable ('c',7) -> ('d',6) = " 
 							+ model.isPieceMoveable(new Coord('c',7),  new Coord('d',6)));	// false, tour des blancs
@@ -95,13 +95,12 @@ public class TestModel {
 							+ model.isPieceMoveable(new Coord('b',4),  new Coord('w',12)));	// false, hors damier
 		System.out.println("isMovePiecePossible ('b',4) -> ('c',5) = " + 
 							model.isMovePiecePossible(new Coord('b',4), new Coord('c',5), false));	// true
-		System.out.println("movePiece ('b',4) -> ('c',5) = move OK - Cf. damier ci-dessous" );
-							model.movePiece(new Coord('b',4), new Coord('c',5));	// move OK visible sur affichage 
 		System.out.println(model);
-	
+		
 		// model.switchGamer(); // Changement joueur - c'est au tour des noirs
 		System.out.println("isPieceMoveable ('c',7) -> ('d',6) = " + 
 							model.isPieceMoveable(new Coord('c',7), new Coord('d',6)));	// true c'est bien au joueur noir de jouer
+		*/
 		System.out.println("isMovePiecePossible ('c',7) -> ('c',6) = " + 
 							model.isMovePiecePossible(new Coord('c',7), new Coord('c',6), false));	// false pas d�placement en diagonale
 
