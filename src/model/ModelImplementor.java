@@ -110,6 +110,7 @@ public class ModelImplementor {
 	public void promote(Coord toPromoteCoord)
 	{
 		PieceModel pieceTofind = findPiece(toPromoteCoord);
+
 		this.removePiece(toPromoteCoord);
 		this.createQueen(toPromoteCoord,pieceTofind.getPieceColor());
 	}
@@ -146,34 +147,37 @@ public class ModelImplementor {
 
 		String st = "";
 		String[][] damier = new String[ModelConfig.LENGTH][ModelConfig.LENGTH];
-
 //		// cr�ation d'un tableau 2D avec les noms des pi�ces � partir de la liste de pi�ces
 		for(PieceModel piece : this.pieces) {
 
 			PieceSquareColor color = piece.getPieceColor();
-			String stColor = (PieceSquareColor.WHITE.equals(color) ? "--B--" : "--N--" );
+			String stColor = piece.toString();
 
 			int col = piece.getColonne() -'a';
 			int lig = piece.getLigne() -1;
-			damier[lig][col ] = stColor ;
+			damier[lig][col] = stColor ;
 		}
 
-		// Affichage du tableau formatt�
-		st = "     a      b      c      d      e      f      g      h      i      j\n";
-		for ( int lig = 9; lig >=0 ; lig--) {
-			st += (lig+1) + "  ";
+		for ( int lig = 4; lig >=0 ; lig--) {
 			for ( int col = 0; col <= 9; col++) {					 
-				String stColor = damier[lig][col];				
-				if (stColor != null) {						
-					st += stColor + "  ";	
-				} 
-				else {
-					st += "-----  ";
-				}
+				String stColor = damier[lig][col];									
+				if(stColor != null)
+					st += stColor + " ";
+				else
+					st += "";			
 			}
 			st +="\n";
 		}
-		
+		for ( int lig = 9; lig >=6 ; lig--) {
+			for ( int col = 0; col <= 9; col++) {					 
+				String stColor = damier[lig][col];
+				if(stColor != null)
+					st += stColor + " ";
+				else
+					st += "";
+			}
+			st +="\n";
+		}
 		return "\nDamier du model \n" + st;	
 	}
 
