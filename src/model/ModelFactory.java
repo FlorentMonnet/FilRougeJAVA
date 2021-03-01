@@ -1,15 +1,17 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import nutsAndBolts.PieceSquareColor;
 
 public class ModelFactory {
 
-	public static Collection<PieceModel> createPieceModelCollection() {
+	public static ArrayList<AbstractPieceModel> createPieceModelCollection() {
 		
-		Collection<PieceModel> pieces = new LinkedList<PieceModel>();
+		ArrayList<AbstractPieceModel> pieces = new ArrayList<AbstractPieceModel>();
 
 		// Cr�ation des pion blancs et ajout dans la collection de pi�ces
 		for ( Coord coord : ModelConfig.WHITE_PIECE_COORDS){

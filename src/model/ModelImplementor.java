@@ -1,9 +1,14 @@
 package model;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 
+import Comparators.*;
 import nutsAndBolts.PieceSquareColor;
 
 /**
@@ -17,10 +22,10 @@ import nutsAndBolts.PieceSquareColor;
  * En revanche, elle n'est pas responsable des algorithme m�tiers li�s au d�placement des pi�ces
  * (responsabilit� de la classe Model)
  */
-public class ModelImplementor {
+public class ModelImplementor{
 
 	// la collection de pi�ces en jeu - m�lange noires et blanches
-	private Collection<PieceModel> pieces;	
+	private ArrayList<AbstractPieceModel> pieces;	
 
 	public ModelImplementor() {
 		super();
@@ -49,7 +54,6 @@ public class ModelImplementor {
 
 	public boolean isMovePieceOk(Coord initCoord, Coord targetCoord, boolean isPieceToTake) {
 	    boolean isMovePieceOk = false;
-        // TODO Atelier 1
         PieceModel pieceModel = findPiece(initCoord);
         if(pieceModel != null) {
         	isMovePieceOk = pieceModel.isMoveOk(targetCoord, isPieceToTake);
@@ -79,8 +83,8 @@ public class ModelImplementor {
 		}
 	}
 	
-	public void createQueen(Coord toPromoteCoord, PieceSquareColor color) {
-		PieceModel pieceModel = new QueenModel(toPromoteCoord,color);
+	private void createQueen(Coord toPromoteCoord, PieceSquareColor color) {
+		AbstractPieceModel pieceModel = new QueenModel(toPromoteCoord,color);
 		this.pieces.add(pieceModel);
 	}
 	
@@ -147,38 +151,20 @@ public class ModelImplementor {
 
 		String st = "";
 		String[][] damier = new String[ModelConfig.LENGTH][ModelConfig.LENGTH];
-//		// cr�ation d'un tableau 2D avec les noms des pi�ces � partir de la liste de pi�ces
-		for(PieceModel piece : this.pieces) {
-
-			PieceSquareColor color = piece.getPieceColor();
-			String stColor = piece.toString();
-
-			int col = piece.getColonne() -'a';
-			int lig = piece.getLigne() -1;
-			damier[lig][col] = stColor ;
-		}
-
-		for ( int lig = 4; lig >=0 ; lig--) {
-			for ( int col = 0; col <= 9; col++) {					 
-				String stColor = damier[lig][col];									
-				if(stColor != null)
-					st += stColor + " ";
-				else
-					st += "";			
+		Collections.sort(this.pieces,new ComparatorLinesAndColumns());
+		ListIterator<AbstractPieceModel> listIterator = this.pieces.listIterator();
+		int count = 1;
+		while(listIterator.hasNext())
+		{
+			System.out.print(listIterator.next()+" ");
+			if(count%5 == 0)
+			{
+				System.out.print("\n");
 			}
-			st +="\n";
-		}
-		for ( int lig = 9; lig >=6 ; lig--) {
-			for ( int col = 0; col <= 9; col++) {					 
-				String stColor = damier[lig][col];
-				if(stColor != null)
-					st += stColor + " ";
-				else
-					st += "";
-			}
-			st +="\n";
+			count++;
 		}
 		return "\nDamier du model \n" + st;	
 	}
+
 
 }
